@@ -7,7 +7,7 @@
     <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAYFBMVEUAd7X///8Ac7NGlMRGk8QAdrUAbLAAbrDZ7PXV6fPy+fw9ir/p9Pkugbo0hr3D2umz0ORUnMh3q9C72eplocoIe7dsps6dxN6lyeCDs9TL4u+WwNzg7vVTmMYhg7uy1OcLxWtDAAABaklEQVRIie3W7Y6CMBAFUBxohwIK8qEIgu//lltou7TortNu9p83MRGSIzgzlEaHwETyU51jr5wrBWsODDzCgNcLrHjkHV5JOIE/hEnCOATGEiYhMHGgLBELgdi1lxlJ1IH8uvS17CjShtiriRCekM1mlm7oBaE2sCEMhA1vBg5+kCUG9n63GmGqXJYTqmNDlhcrrAkXdPsIx3FI+4TidpPDkHNOm7ndrP6U9TH/5VZxDewPsEvaS5t0CK8h9qXKSd4tq9T3EaC73rOl2EVp/X0bcqcddzMMU7YtbFuHHShsqH+lnJwlsUIqFIW7mLZAhPuYOfaGh5nR4fBotgLVQIWik+PE+11h38NCLUGmV+Ypfw9HdQU0j/lAhfr9AKafggizXHc81/VJibA4qvKzk4HE4nzgB/4jfLU8UiA26RqxQn0wfEOhTjTPMEIdZh9EOsw9QXzpPOdvMHgTGLztDN7oBm+twzfzYfkCChobmnKthiYAAAAASUVORK5CYII=" type="image/icon type">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="websitestyle.css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <body>
 <header style="background-color: plum;" class=" sticky-top p-4" >
     <div class="row " >
@@ -190,7 +190,7 @@
 <section style=" background-color: rgb(234, 214, 234);" class="p-4">
     <div class="container">
         <h2 class="text-center"><b><u>Contact Me</u></b></h2>
-        <form class="row g-3">
+        <form class="row g-3" id= " submit-form" action= " ">
             <div class="col-md-6">
                 <label for="inputName" class="form-label">Name</label>
                 <input type="text" class="form-control" id="inputName" placeholder="Enter your Name">
@@ -303,7 +303,25 @@
         <!-- Copyright -->
       </footer>
 </section>
+<script>
+  $("#submit-form").submit((e)=>{
+      e.preventDefault()
+      $.ajax({
+          url:"https://script.google.com/macros/s/AKfycbwuqaoGfG00jafMqHnWVoAvrSQbK43bJv4BYaZM61j84F1W12HJ06FTZwFxWKazRJBt/exec ",
+          data:$("#submit-form").serialize(),
+          method:"post",
+          success:function (response){
+              alert("Form submitted successfully")
+              window.location.reload()
+              //window.location.href="https://google.com"
+          },
+          error:function (err){
+              alert("Something Error")
 
+          }
+      })
+  })
+</script> 
     
 
 
