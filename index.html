@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="websitestyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>   
 <body>
 <header style="background-color: plum;" class=" sticky-top p-4" >
     <div class="row " >
@@ -190,24 +191,24 @@
 <section style=" background-color: rgb(234, 214, 234);" class="p-4">
     <div class="container">
         <h2 class="text-center"><b><u>Contact Me</u></b></h2>
-        <form class="row g-3" id= " submit-form" action= " ">
+        <form id="dataForm"  >
             <div class="col-md-6">
-                <label for="inputName" class="form-label">Name</label>
+                <label for="inputName" name="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="inputName" placeholder="Enter your Name">
               </div>
             <div class="col-md-6">
                 
-              <label for="inputEmail4" class="form-label">Email</label>
+              <label for="inputEmail4" name="email" class="form-label">Email</label>
               <input type="email" class="form-control" id="inputEmail4">
             </div>
             
             <div class="col-12">
-              <label for="inputAddress" class="form-label">Address</label>
+              <label for="inputAddress" name="address" class="form-label">Address</label>
               <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
             </div>
             <div class="col-12">
-                <label for="commentContent" class="form-label">Comment</label>
-                <textarea class="form-control" id="commentContent" rows="3" placeholder="Your Comment"></textarea>
+                <label for="commentContent" name="message" class="form-label">Comment</label>
+                <textarea class="form-control" id="commentContent"  placeholder="Your Comment"></textarea>
               </div>
             
             
@@ -221,11 +222,14 @@
               </div>
             </div>
             <div class="col-12">
-              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="submit" id="submit-button"  class="btn btn-primary">Submit</button>
             </div>
           </form>
+          
     </div>
+    <p id="response"></p>
 </section>
+
 <section>
     <footer class="bg-body-tertiary text-center">
         <!-- Grid container -->
@@ -304,26 +308,34 @@
       </footer>
 </section>
 <script>
-  $("#submit-form").submit((e)=>{
-      e.preventDefault()
-      $.ajax({
-          url:"https://script.google.com/macros/s/AKfycbwuqaoGfG00jafMqHnWVoAvrSQbK43bJv4BYaZM61j84F1W12HJ06FTZwFxWKazRJBt/exec ",
-          data:$("#submit-form").serialize(),
-          method:"post",
-          success:function (response){
-              alert("Form submitted successfully")
-              window.location.reload()
-              //window.location.href="https://google.com"
-          },
-          error:function (err){
-              alert("Something Error")
+  document.getElementById("dataForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent default form submission
 
+      let formData = new FormData(event.target);
+      let jsonData = {};
+      formData.forEach((value, key) => jsonData[key] = value);
+
+      fetch("https://script.google.com/macros/s/AKfycbxSk1-zePqTrQcP9cDnUl-2n7bgcVLmwiBd1pqKnDY1rFs5WbsV3WeE_CIU8f3fRBeW/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(jsonData)
+      })
+      .then(response => response.json())
+      .then(data => {
+          document.getElementById("response").innerText = data.message;
+          if (data.status === "success") {
+              event.target.reset(); // Reset form after successful submission
           }
       })
-  })
-</script> 
-    
+      .catch(error => {
+          console.error("Error:", error);
+          document.getElementById("response").innerText = "Submission failed. Check console for details.";
+      });
+  });
+</script>
 
+
+      
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
