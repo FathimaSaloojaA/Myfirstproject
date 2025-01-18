@@ -191,24 +191,24 @@
 <section style=" background-color: rgb(234, 214, 234);" class="p-4">
     <div class="container">
         <h2 class="text-center"><b><u>Contact Me</u></b></h2>
-        <form id="dataForm"  >
+        <form id="contact-form"  >
             <div class="col-md-6">
-                <label for="inputName" name="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="inputName" placeholder="Enter your Name">
+                <label for="inputName"  class="form-label">Name</label>
+                <input type="text" name="name" class="form-control" id="inputName" placeholder="Enter your Name">
               </div>
             <div class="col-md-6">
                 
-              <label for="inputEmail4" name="email" class="form-label">Email</label>
-              <input type="email" class="form-control" id="inputEmail4">
+              <label for="inputEmail4"  class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" id="inputEmail4">
             </div>
             
             <div class="col-12">
-              <label for="inputAddress" name="address" class="form-label">Address</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+              <label for="inputAddress" class="form-label">Address</label>
+              <input type="text" name="address"  class="form-control" id="inputAddress" placeholder="1234 Main St">
             </div>
             <div class="col-12">
-                <label for="commentContent" name="message" class="form-label">Comment</label>
-                <textarea class="form-control" id="commentContent"  placeholder="Your Comment"></textarea>
+                <label for="commentContent"  class="form-label">Comment</label>
+                <textarea class="form-control" name="message"  id="commentContent"  placeholder="Your Comment"></textarea>
               </div>
             
             
@@ -308,37 +308,29 @@
       </footer>
 </section>
 <script>
-  document.getElementById("dataForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent default form submission
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyGvOZH9LCe_UU6EU9_9hpU16_cdfFfiOe6rxQGVLdkRDMnMNHzEIPLoMQ-uJh6SnF7/exec'
 
-      let formData = new FormData(event.target);
-      let jsonData = {};
-      formData.forEach((value, key) => jsonData[key] = value);
+const form = document.getElementById("contact-form");
 
-      fetch("https://script.google.com/macros/s/AKfycbxSk1-zePqTrQcP9cDnUl-2n7bgcVLmwiBd1pqKnDY1rFs5WbsV3WeE_CIU8f3fRBeW/exec", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(jsonData)
-      })
-      .then(response => response.json())
-      .then(data => {
-          document.getElementById("response").innerText = data.message;
-          if (data.status === "success") {
-              event.target.reset(); // Reset form after successful submission
-          }
-      })
-      .catch(error => {
-          console.error("Error:", error);
-          document.getElementById("response").innerText = "Submission failed. Check console for details.";
-      });
-  });
+form.addEventListener('submit', e => {
+  
+  e.preventDefault()
+  
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)
+    
+  })
+  .then(response => alert("Thank you! Form is submitted" ))
+  .then(() => { window.location.reload(); })
+  .catch(error => console.error('Error!', error.message))
+})
 </script>
 
+          
 
       
 
 
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>    
     <script src="https://kit.fontawesome.com/0d2d0007c1.js" crossorigin="anonymous"></script>
