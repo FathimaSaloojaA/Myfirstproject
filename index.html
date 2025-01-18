@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fathima Salooja A</title>
-    <link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAYFBMVEUAd7X///8Ac7NGlMRGk8QAdrUAbLAAbrDZ7PXV6fPy+fw9ir/p9Pkugbo0hr3D2umz0ORUnMh3q9C72eplocoIe7dsps6dxN6lyeCDs9TL4u+WwNzg7vVTmMYhg7uy1OcLxWtDAAABaklEQVRIie3W7Y6CMBAFUBxohwIK8qEIgu//lltou7TortNu9p83MRGSIzgzlEaHwETyU51jr5wrBWsODDzCgNcLrHjkHV5JOIE/hEnCOATGEiYhMHGgLBELgdi1lxlJ1IH8uvS17CjShtiriRCekM1mlm7oBaE2sCEMhA1vBg5+kCUG9n63GmGqXJYTqmNDlhcrrAkXdPsIx3FI+4TidpPDkHNOm7ndrP6U9TH/5VZxDewPsEvaS5t0CK8h9qXKSd4tq9T3EaC73rOl2EVp/X0bcqcddzMMU7YtbFuHHShsqH+lnJwlsUIqFIW7mLZAhPuYOfaGh5nR4fBotgLVQIWik+PE+11h38NCLUGmV+Ypfw9HdQU0j/lAhfr9AKafggizXHc81/VJibA4qvKzk4HE4nzgB/4jfLU8UiA26RqxQn0wfEOhTjTPMEIdZh9EOsw9QXzpPOdvMHgTGLztDN7oBm+twzfzYfkCChobmnKthiYAAAAASUVORK5CYII=" type="image/icon type">
+    <link rel="icon" href="https://media.licdn.com/dms/image/v2/D4E03AQHHv9QJREhmmw/profile-displayphoto-shrink_400_400/B4EZRfndXAGwAg-/0/1736770967532?e=1742428800&v=beta&t=dpUnklGEP2ZUVyqmi3_2GDQw8M9i5u_irGyHkeBaBFE">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="websitestyle.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -50,8 +50,8 @@
     
 <div class="container " >
     <div class="row p-4">
-        <div class="col-md-6 col-10" >
-            <img src="https://media.licdn.com/dms/image/v2/D4E03AQHHv9QJREhmmw/profile-displayphoto-shrink_400_400/B4EZRfndXAGwAg-/0/1736770967532?e=1742428800&v=beta&t=dpUnklGEP2ZUVyqmi3_2GDQw8M9i5u_irGyHkeBaBFE" class="rounded-circle img-responsive">
+        <div class="col-md-6 col-12 image-container" style="max-width: 100%;overflow: hidden;" >
+            <img src="https://media.licdn.com/dms/image/v2/D4E03AQHHv9QJREhmmw/profile-displayphoto-shrink_400_400/B4EZRfndXAGwAg-/0/1736770967532?e=1742428800&v=beta&t=dpUnklGEP2ZUVyqmi3_2GDQw8M9i5u_irGyHkeBaBFE" class="rounded-circle img-responsive profile-pic" alt="Profile Picture">
             </div>
         <div class="col-md-6 col-12 p-4 " >
         <h4 class="ml-5"><u><strong> Software Developer</strong></u>  </h4>
@@ -227,7 +227,8 @@
           </form>
           
     </div>
-    <p id="response"></p>
+    <div id="message-container" style="margin-top: 20px;"></div>
+
 </section>
 
 <section>
@@ -315,14 +316,33 @@ const form = document.getElementById("contact-form");
 form.addEventListener('submit', e => {
   
   e.preventDefault()
-  
+  const messageContainer = document.getElementById('message-container');
+  messageContainer.innerHTML = '';
+
   fetch(scriptURL, { method: 'POST', body: new FormData(form)
     
   })
-  .then(response => alert("Thank you! Form is submitted" ))
-  .then(() => { window.location.reload(); })
-  .catch(error => console.error('Error!', error.message))
-})
+  .then(response => {
+      // Create success message and add it below the form
+      const successMessage = document.createElement('div');
+      successMessage.style.color = 'green';  // Style success message
+      successMessage.innerHTML = 'Thank you! Form is submitted successfully!';
+      messageContainer.appendChild(successMessage);
+    })
+    .then(() => {
+      // Optionally clear the form after submission
+      form.reset();
+    })
+    .catch(error => {
+      // Create error message and add it below the form
+      const errorMessage = document.createElement('div');
+      errorMessage.style.color = 'red';  // Style error message
+      errorMessage.innerHTML = 'Error! There was an issue submitting the form.';
+      messageContainer.appendChild(errorMessage);
+      console.error('Error!', error.message);
+    });
+});
+  
 </script>
 
           
